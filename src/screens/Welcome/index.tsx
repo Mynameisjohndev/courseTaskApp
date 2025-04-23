@@ -1,10 +1,10 @@
-import { Text, View } from 'react-native';
+import { Background, TitleT1 } from '~/global/styles';
 
 const Welcome = () => {
   return(
-    <View>
-      <Text>Welcome</Text>
-    </View>
+    <Background>
+      <TitleT1>Welcome</TitleT1>
+    </Background>
   );
 };
 
