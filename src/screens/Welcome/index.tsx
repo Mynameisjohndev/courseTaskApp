@@ -1,3 +1,4 @@
+import { Input } from '~/components/Input';
 import {Background, TitleT1, SubTitleT1} from '~/global/styles';
 
 const Welcome = () => {
@@ -9,6 +10,8 @@ const Welcome = () => {
         Para aprender mais, continue assistindo as aulas e praticando para
         aprender todo conteúdo!
       </SubTitleT1>
+      <Input placeholder="Username"/>
+      <Input placeholder="Username"/>
     </Background>
   );
 };

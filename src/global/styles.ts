@@ -30,6 +30,7 @@ const Background = styled.SafeAreaView`
     background-color: ${theme.colors.background};
   `};
   flex: 1;
+  padding: 6px;
   align-items: center;
   justify-content: center;
 `;
