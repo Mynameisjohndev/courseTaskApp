@@ -1,9 +1,14 @@
-import { Background, TitleT1 } from '~/global/styles';
+import {Background, TitleT1, SubTitleT1} from '~/global/styles';
 
 const Welcome = () => {
-  return(
+
+  return (
     <Background>
-      <TitleT1>Welcome</TitleT1>
+      <TitleT1>BEM-VINDO</TitleT1>
+      <SubTitleT1>
+        Para aprender mais, continue assistindo as aulas e praticando para
+        aprender todo conteúdo!
+      </SubTitleT1>
     </Background>
   );
 };

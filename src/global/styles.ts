@@ -15,12 +15,14 @@ const TitleT2 = styled.Text`
     font-family: ${theme.fonts.bold};
   `}
 `;
+
 const SubTitleT1 = styled.Text`
   ${({theme}) => css `
     font-size: ${theme.text_size.st1}px;
-    color: ${theme.colors.title};
+    color: ${theme.colors.subtitle};
     font-family: ${theme.fonts.light};
   `}
+  text-align: center;
 `;
 
 const Background = styled.SafeAreaView`
