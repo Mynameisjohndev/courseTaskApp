@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
+import { StatusBar } from 'react-native';
 import {ThemeProvider} from 'styled-components/native';
 import {AppContext} from '~/context';
 import {useThemeContext} from '~/context/themeContext';
@@ -14,9 +15,11 @@ const App: React.FC = () => {
 
   const AppContent = () => {
     const {themeMode} = useThemeContext();
-    console.log(themeMode);
+    const theme = themeMode ? darkTheme : lightTheme;
+    const barStyle = themeMode ?  'light-content' :  'dark-content';
     return (
-      <ThemeProvider theme={themeMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={theme}>
+        <StatusBar backgroundColor={theme.colors.background} barStyle={barStyle}/>
         <NavigationContainer>
           <Routes />
         </NavigationContainer>

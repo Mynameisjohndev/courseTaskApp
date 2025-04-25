@@ -31,8 +31,13 @@ const Background = styled.SafeAreaView`
   `};
   flex: 1;
   padding: 6px 18px;
+  justify-content: space-evenly;
+  align-items: center;
+  `;
+
+const Content = styled.View`
   align-items: center;
   justify-content: center;
 `;
 
-export {TitleT1, TitleT2, SubTitleT1, Background};
+export {TitleT1, TitleT2, SubTitleT1, Background, Content};
