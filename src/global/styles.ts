@@ -35,9 +35,25 @@ const Background = styled.SafeAreaView`
   align-items: center;
   `;
 
+const BackgroundScroll = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexGrow: 1,
+    padding: 20,
+  },
+})`
+  ${({theme}) => css `
+    background-color: ${theme.colors.background};
+  `};
+  width: 100%;
+  height: 100%;
+  `;
+
 const Content = styled.View`
+  width: 100%;
   align-items: center;
   justify-content: center;
 `;
 
-export {TitleT1, TitleT2, SubTitleT1, Background, Content};
+export {TitleT1, TitleT2, SubTitleT1, Background, Content, BackgroundScroll};
