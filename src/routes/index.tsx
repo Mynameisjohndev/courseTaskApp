@@ -3,13 +3,16 @@ import { Home } from '~/screens/Home';
 import { Login } from '~/screens/Login';
 import {Welcome} from '../screens/Welcome';
 import { AppRoutesTypes, AuthRoutesTypes } from '~/types/navigation';
+import { useUserContext } from '~/context/userContext';
+import { LoadingScreen } from '~/screens/Loading';
 
 const AuthStack =  createNativeStackNavigator<AuthRoutesTypes>();
 const AppStack =  createNativeStackNavigator<AppRoutesTypes>();
 
 const AuthRoutes = () => {
+  const {initialRouteName} = useUserContext();
   return(
-    <AuthStack.Navigator initialRouteName="welcome" screenOptions={{headerShown: false}}>
+    <AuthStack.Navigator initialRouteName={initialRouteName} screenOptions={{headerShown: false}}>
       <AuthStack.Screen name="welcome" component={Welcome}/>
       <AuthStack.Screen name="login" component={Login}/>
     </AuthStack.Navigator>
@@ -18,16 +21,15 @@ const AuthRoutes = () => {
 
 const AppRoutes = () => {
   return(
-    <AppStack.Navigator>
-      <AppStack.Screen name="home" component={Home} screenOptions={{headerShown: false}} />
+    <AppStack.Navigator screenOptions={{headerShown: false}}>
+      <AppStack.Screen name="home" component={Home} />
     </AppStack.Navigator>
   );
 };
 
 const Routes = () => {
-  const loading = false;
-  const user = false;
-  return loading ? <></> : user ? <AppRoutes/> : <AuthRoutes/>;
+  const {loading, user} = useUserContext();
+  return loading ? <LoadingScreen/> : user ? <AppRoutes/> : <AuthRoutes/>;
 };
 
 export {Routes};

@@ -1,22 +1,17 @@
-import {useRef, useState} from 'react';
-// import { Keyboard } from 'react-native';
+import {FC, useEffect, useRef, useState} from 'react';
 import {Button, IButtoRef} from '~/components/Button';
 import {Background, TitleT1, SubTitleT1, Content} from '~/global/styles';
 import Ilustration from '~/assets/svgs/ilustrations/ilustration-welcome.svg';
+import { AuthScreenProps } from '~/types/navigation';
+import { setStorage } from '~/utils/AsyncStorage';
 
-const Welcome = () => {
+const Welcome: FC<AuthScreenProps<'welcome'>> = ({navigation}) => {
   const buttonRef = useRef<IButtoRef>(null);
   const [loading, _] = useState(false);
 
-  // const handleLogin = () => {
-  //   setLoading(v => !v);
-  //   buttonRef.current?.setActive(false);
-  //   Keyboard.dismiss();
-  //   setTimeout(()=>{
-  //     setLoading(v => !v);
-  //     buttonRef.current?.setActive(true);
-  //   },2000);
-  // };
+  useEffect(()=>{
+    setStorage('@welcome', true);
+  },[]);
 
   return (
     <Background>
@@ -32,7 +27,10 @@ const Welcome = () => {
         title="VAMOS LÁ"
         loading={loading}
         ref={buttonRef}
-        onPress={() => null}
+        onPress={() => navigation.reset({
+          index: 0,
+          routes: [{name: 'login'}],
+        })}
       />
     </Background>
   );
