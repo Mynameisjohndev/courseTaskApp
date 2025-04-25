@@ -9,7 +9,7 @@ const AppStack =  createNativeStackNavigator<AppRoutesTypes>();
 
 const AuthRoutes = () => {
   return(
-    <AuthStack.Navigator initialRouteName="welcome" >
+    <AuthStack.Navigator initialRouteName="welcome" screenOptions={{headerShown: false}}>
       <AuthStack.Screen name="welcome" component={Welcome}/>
       <AuthStack.Screen name="login" component={Login}/>
     </AuthStack.Navigator>
@@ -19,7 +19,7 @@ const AuthRoutes = () => {
 const AppRoutes = () => {
   return(
     <AppStack.Navigator>
-      <AppStack.Screen name="home" component={Home}/>
+      <AppStack.Screen name="home" component={Home} screenOptions={{headerShown: false}} />
     </AppStack.Navigator>
   );
 };
