@@ -1,12 +1,58 @@
-import { FC } from 'react';
-import { Text, View } from 'react-native';
-import { AppScreenProps } from '~/types/navigation';
+import {FC} from 'react';
+import {Text, View} from 'react-native';
+import {AppScreenProps} from '~/types/navigation';
+import {Header, HomeBackground, HomeTitle} from './styles';
+import {useUserContext} from '~/context/userContext';
+import {Content, SubTitleT1} from '~/global/styles';
+import {Button} from '~/components/Button';
+import Ilustration from '~/assets/svgs/ilustrations/ilustration-home.svg';
+import {FlatList} from 'react-native';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
-  return(
-    <View>
-      <Text>Home</Text>
-    </View>
+  const {user, tasks, handleCreateTask} = useUserContext();
+
+  return (
+    <HomeBackground>
+      <Header>
+        <HomeTitle numberOfLines={1}>Olá, {user?.name}</HomeTitle>
+        <View
+          style={{
+            width: 70,
+            height: 30,
+            backgroundColor: 'red',
+            borderRadius: 15,
+          }}
+        />
+      </Header>
+      {tasks.length > 0 ? (
+        <FlatList
+          ListHeaderComponent={() => {
+            return <></>;
+          }}
+          data={tasks}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => {
+            return <Text>{item.title}</Text>;
+          }}
+        />
+      ) : (
+        <>
+          <Content>
+            <Ilustration />
+            <SubTitleT1>
+              Parece que você não possui nenhuma tarefa criada ainda. Por que
+              não começa a criar suas tarefas agora?
+            </SubTitleT1>
+          </Content>
+          <Button
+            title="CRIAR TAREFA"
+            // ref={}
+            // loading={}
+            // onPress={()=>handleCreateTask({})}
+          />
+        </>
+      )}
+    </HomeBackground>
   );
 };
 
