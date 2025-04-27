@@ -7,6 +7,7 @@ import {Content, SubTitleT1} from '~/global/styles';
 import {Button} from '~/components/Button';
 import Ilustration from '~/assets/svgs/ilustrations/ilustration-home.svg';
 import {FlatList} from 'react-native';
+import { SwitchAppTheme } from '~/components/SwitchAppTheme';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
   const {user, tasks, handleCreateTask} = useUserContext();
@@ -15,14 +16,7 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
     <HomeBackground>
       <Header>
         <HomeTitle numberOfLines={1}>Olá, {user?.name}</HomeTitle>
-        <View
-          style={{
-            width: 70,
-            height: 30,
-            backgroundColor: 'red',
-            borderRadius: 15,
-          }}
-        />
+        <SwitchAppTheme/>
       </Header>
       {tasks.length > 0 ? (
         <FlatList
