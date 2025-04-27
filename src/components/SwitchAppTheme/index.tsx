@@ -6,7 +6,7 @@ import { SwitchContainer, SwitchOption } from './styles';
 
 const SwitchAppTheme = () => {
 
-  const {themeMode, setThemeMode} = useThemeContext();
+  const {themeMode, updatedTheme} = useThemeContext();
   const {colors} = useTheme();
   const {sun_disalbed_icon, sun_enabled_icon, moon_disabled_icon, moon_enabled_icon} = colors;
 
@@ -14,15 +14,15 @@ const SwitchAppTheme = () => {
     <SwitchContainer>
       <SwitchOption {...{
         themeMode,
-        type: 'ligth',
-        onPress: () => setThemeMode(v => !v),
+        type: 'light',
+        onPress: updatedTheme,
       }}>
         <Sun fill={themeMode ? sun_disalbed_icon : sun_enabled_icon}/>
       </SwitchOption>
       <SwitchOption {...{
         themeMode,
         type: 'dark',
-        onPress: () => setThemeMode(v => !v),
+        onPress: updatedTheme,
       }}>
         <Moon fill={themeMode ? moon_enabled_icon : moon_disabled_icon } />
       </SwitchOption>

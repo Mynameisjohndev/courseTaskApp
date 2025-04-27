@@ -1,17 +1,42 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { darkTheme, lightTheme } from '~/themes';
 import { IContext } from '~/types/context';
+import { AppTheme } from '~/types/theme';
+import { getStorage, setStorage } from '~/utils/AsyncStorage';
 
 interface IThemeContext {
   themeMode: boolean;
-  setThemeMode: Dispatch<SetStateAction<boolean>>
+  setThemeMode: Dispatch<SetStateAction<boolean>>;
+  theme: AppTheme | null;
+  updatedTheme: () => void;
 }
 
 const ThemeContext = createContext({} as IThemeContext);
 
 const ThemeContextProvider = ({children}: IContext) => {
-  const [themeMode, setThemeMode] = useState<boolean>(true);
+  const [themeMode, setThemeMode] = useState<boolean>(false);
+  const [theme, setTheme] = useState<AppTheme | null>(null);
+
+  const updatedTheme = async () =>{
+    const value = !themeMode ? 'dark' : 'light';
+    setStorage('@theme', value);
+    setThemeMode(v => !v);
+    setTheme(!themeMode ? darkTheme : lightTheme);
+  };
+
+  const loadTheme = async () => {
+    const usedTheme = await getStorage('@theme');
+    setTheme(usedTheme === 'dark' ? darkTheme : lightTheme);
+    setThemeMode(usedTheme === 'dark');
+  };
+
+
+  useEffect(()=>{
+    loadTheme();
+  },[]);
+
   return(
-    <ThemeContext.Provider value={{themeMode, setThemeMode}}>
+    <ThemeContext.Provider value={{themeMode, setThemeMode, theme, updatedTheme}}>
       {children}
     </ThemeContext.Provider>
   );

@@ -4,9 +4,9 @@ import {UserContextProvider} from './userContext';
 
 const AppContext = ({children}: IContext) => {
   return (
-    <UserContextProvider>
-      <ThemeContextProvider>{children}</ThemeContextProvider>
-    </UserContextProvider>
+    <ThemeContextProvider>
+      <UserContextProvider>{children}</UserContextProvider>
+    </ThemeContextProvider>
   );
 };
 

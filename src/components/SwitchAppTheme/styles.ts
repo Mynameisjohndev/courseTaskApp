@@ -12,7 +12,7 @@ const SwitchContainer = styled.View`
 
 interface ISwitchOption{
   themeMode: boolean;
-  type: 'ligth' | 'dark';
+  type: 'light' | 'dark';
 }
 
 const SwitchOption = styled.TouchableOpacity<ISwitchOption>`
@@ -21,7 +21,7 @@ const SwitchOption = styled.TouchableOpacity<ISwitchOption>`
   border-radius: 15px;
   align-items: center;
   justify-content: center;
-  ${({theme: {colors}, themeMode, type}) => type === 'ligth' && !themeMode ?
+  ${({theme: {colors}, themeMode, type}) => type === 'light' && !themeMode ?
     css`
       background-color: ${colors.selected_theme};
       width: 35px;

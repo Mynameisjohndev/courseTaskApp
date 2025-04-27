@@ -14,6 +14,7 @@ import {IContext} from '~/types/context';
 import {Task} from '~/types/task';
 import {User} from '~/types/user';
 import {getStorage, setStorage} from '~/utils/AsyncStorage';
+import { useThemeContext } from './themeContext';
 
 interface IUserContext {
   loading: boolean;
@@ -44,6 +45,8 @@ const UserContextProvider = ({children}: IContext) => {
     //   description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
     // },
   ]);
+
+  const {theme} = useThemeContext();
 
   const startAppData = async () => {
     setLoading(true);
@@ -77,8 +80,10 @@ const UserContextProvider = ({children}: IContext) => {
   const handleCreateTask = (task: Task) => {};
 
   useEffect(() => {
-    startAppData();
-  }, []);
+    if(theme){
+      startAppData();
+    }
+  }, [theme]);
 
   return (
     <UserContext.Provider
