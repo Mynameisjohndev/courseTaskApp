@@ -39,11 +39,11 @@ const UserContextProvider = ({children}: IContext) => {
   const loginButtonRef = useRef<IButtoRef>(null);
   const [loadingSaveUser, setLoadingSaveUser] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>([
-    // {
-    //   id: 1,
-    //   title: 'Ler livros',
-    //   description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
-    // },
+    {
+      id: 1,
+      title: 'Ler livros',
+      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
+    },
   ]);
 
   const {loadedTheme} = useThemeContext();

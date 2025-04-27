@@ -22,10 +22,10 @@ const text_size = {
   d1: 12,
 };
 const fonts = {
-  light: "Inter-Light",
-  regular: "Inter-Regular",
-  bold: "Inter-Bold",
-}
+  light: 'Inter-Light',
+  regular: 'Inter-Regular',
+  bold: 'Inter-Bold',
+};
 const configs = {
   border_radius,
   input_height,
@@ -89,7 +89,7 @@ export const darkTheme: AppTheme = {
     input_focus_border_color: _FFB701,
     input_background_color: _4E4E5D,
     input_placeholder_color: _A8A8A8,
-    input_color: _8C8C8E,
+    input_color: _FFFFFF,
     search_container_background_color: _4E4E5D,
     search_icon: _FFFFFF,
     card_background_color: _4E4E5D,
