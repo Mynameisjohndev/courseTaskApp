@@ -43,6 +43,19 @@ const UserContextProvider = ({children}: IContext) => {
       id: 1,
       title: 'Ler livros',
       description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
+      complete: true,
+    },
+    {
+      id: 2,
+      title: 'Ler livros',
+      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
+      complete: true,
+    },
+    {
+      id: 3,
+      title: 'Ler livros',
+      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
+      complete: false,
     },
   ]);
 

@@ -1,5 +1,4 @@
 import {FC, useState} from 'react';
-import {Text, View} from 'react-native';
 import {AppScreenProps} from '~/types/navigation';
 import {Header, HomeBackground, HomeTitle} from './styles';
 import {useUserContext} from '~/context/userContext';
@@ -9,6 +8,7 @@ import Ilustration from '~/assets/svgs/ilustrations/ilustration-home.svg';
 import {FlatList} from 'react-native';
 import {SwitchAppTheme} from '~/components/SwitchAppTheme';
 import {Search} from '~/components/Search';
+import { ListCardTask } from '~/components/ListCardTask';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
   const {user, tasks, handleCreateTask} = useUserContext();
@@ -28,7 +28,7 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
             data={tasks}
             keyExtractor={item => String(item.id)}
             renderItem={({item}) => {
-              return <Text>{item.title}</Text>;
+              return <ListCardTask {...item} key={item.id}/>;
             }}
           />
         </>

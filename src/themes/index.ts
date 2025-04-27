@@ -95,7 +95,7 @@ export const darkTheme: AppTheme = {
     card_background_color: _4E4E5D,
     card_description_color: _FFFFFF,
     not_complet_task_icon: _FFFFFF,
-    complet_task_icon : _4CAF50,
+    complet_task_icon : _FFFFFF,
     delete_icon: _FFFFFF,
     edit_icon: _FFFFFF,
     selected_theme: _A67701,
