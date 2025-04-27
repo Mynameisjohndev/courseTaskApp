@@ -46,7 +46,7 @@ const UserContextProvider = ({children}: IContext) => {
     // },
   ]);
 
-  const {theme} = useThemeContext();
+  const {loadedTheme} = useThemeContext();
 
   const startAppData = async () => {
     setLoading(true);
@@ -80,10 +80,10 @@ const UserContextProvider = ({children}: IContext) => {
   const handleCreateTask = (task: Task) => {};
 
   useEffect(() => {
-    if(theme){
+    if(loadedTheme){
       startAppData();
     }
-  }, [theme]);
+  }, [loadedTheme]);
 
   return (
     <UserContext.Provider
