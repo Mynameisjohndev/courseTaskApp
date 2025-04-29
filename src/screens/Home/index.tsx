@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {AppScreenProps} from '~/types/navigation';
 import {Header, HomeBackground, HomeTitle} from './styles';
 import {useUserContext} from '~/context/userContext';
@@ -9,11 +9,27 @@ import {FlatList} from 'react-native';
 import {SwitchAppTheme} from '~/components/SwitchAppTheme';
 import {Search} from '~/components/Search';
 import { ListCardTask } from '~/components/ListCardTask';
+import { createTask, deleteTask, getAllTasks, toggleTaskComplete, updateTask } from '~/databases/tasks';
+import { getDatabaseConnection } from '~/databases';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
   const {user, tasks, handleCreateTask} = useUserContext();
 
   const [search, setSearch] = useState<string>('');
+
+  const test = async() => {
+    const db = await getDatabaseConnection();
+    const result = await getAllTasks(db);
+    console.log(result);
+    // await createTask({db, title: 'Ler livros', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam iste molestiae fugit in assumenda cupiditate libero nesciunt, enim saepe e'});
+    // await updateTask({db, title: 'Ler', description: 'Lorem ipsum dolor', id: 2});
+    // await deleteTask({db, id: 2});
+    // await toggleTaskComplete({db, id: 3, complete: false});
+  };
+
+  useEffect(()=>{
+    test();
+  },[]);
 
   return (
     <HomeBackground>
