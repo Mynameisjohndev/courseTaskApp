@@ -27,6 +27,7 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
         <>
           <Search value={search} onChangeText={setSearch} />
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={tasks}
             keyExtractor={item => String(item.id)}
             renderItem={({item}) => {

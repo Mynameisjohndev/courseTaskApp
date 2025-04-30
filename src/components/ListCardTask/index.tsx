@@ -7,11 +7,13 @@ import { FC } from 'react';
 import { Task } from '~/types/task';
 import { useTheme } from 'styled-components/native';
 import { ListCardTaskButton, ListCardTaskContainer, ListCardTaskDescription, ListCardTaskRow, ListCardTaskTitle } from './styles';
+import { useUserContext } from '~/context/userContext';
 
 const ListCardTask: FC<Task> = ({complete,description,id,title}) => {
   const { colors } = useTheme();
+  const {handleToggleTaskComplete} = useUserContext();
   return(
-    <ListCardTaskContainer>
+    <ListCardTaskContainer onPress={()=>handleToggleTaskComplete(id, complete ? 1 : 0)}>
       <ListCardTaskTitle>{title}</ListCardTaskTitle>
       <ListCardTaskDescription>{description}</ListCardTaskDescription>
       <ListCardTaskRow>

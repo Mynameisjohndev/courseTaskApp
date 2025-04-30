@@ -7,17 +7,17 @@ const SearchContainer = styled.View`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  ${({theme: {border_radius, colors, input_height}}) => css `
+  ${({theme: {border_radius, colors}}) => css `
     border-radius: ${border_radius.b1}px;
     background-color: ${colors.search_container_background_color};
-    height: ${input_height.normal}px;
+    height: 50px;
   `}
 `;
 
 const SearchInput = styled.TextInput`
   flex: 0.98;
-  ${({theme: {colors, input_height}}) => css `
-    height: ${input_height.normal}px;
+  ${({theme: {colors}}) => css `
+    height: 50px;
     color: ${colors.input_color};
   `}
 `;

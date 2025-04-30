@@ -18,7 +18,7 @@ import {User} from '~/types/user';
 import {getStorage, setStorage} from '~/utils/AsyncStorage';
 import { useThemeContext } from './themeContext';
 import { getDatabaseConnection } from '~/databases';
-import { createTask, getAllTasks } from '~/databases/tasks';
+import { createTask, getAllTasks, toggleTaskComplete } from '~/databases/tasks';
 
 interface IUserContext {
   loading: boolean;
@@ -31,6 +31,7 @@ interface IUserContext {
   handleCreateTask: (task: CreateTask, buttonRef: RefObject<IButtoRef | null>, setLoadingCreateTask: Dispatch<SetStateAction<boolean>>) => void;
   openModal: boolean;
   openAndCloseModal: () => void;
+  handleToggleTaskComplete: (id: number,  complete: 0 | 1) => void;
 }
 
 const UserContext = createContext({} as IUserContext);
@@ -112,6 +113,29 @@ const UserContextProvider = ({children}: IContext) => {
     loadTasks();
   },[]);
 
+  const handleToggleTaskComplete = (id: number, complete: 0 | 1) => {
+    if(complete === 0 ){
+      return Alert.alert('Você deseja terminar a tarefa?', 'Para concluir a tarefa pressione "sim".', [
+        {text: 'Não', style: 'cancel'},
+        {text: 'Sim', onPress: async() =>{
+          const db = await getDatabaseConnection();
+          toggleTaskComplete({db, id, complete: true}).then(()=>{
+            loadTasks();
+          });
+        }},
+      ]);
+    }else{
+      return Alert.alert('Você deseja reverter a tarefa?', 'Para reverter a tarefa pressione "sim".', [
+        {text: 'Não', style: 'cancel'},
+        {text: 'Sim', onPress: async() =>{
+          const db = await getDatabaseConnection();
+          toggleTaskComplete({db, id, complete: false}).then(()=>{
+            loadTasks();
+          });
+        }},
+      ]);
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -126,6 +150,7 @@ const UserContextProvider = ({children}: IContext) => {
         handleCreateTask,
         openModal,
         openAndCloseModal,
+        handleToggleTaskComplete,
       }}>
       {children}
     </UserContext.Provider>

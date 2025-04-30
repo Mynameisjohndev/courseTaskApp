@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-const ListCardTaskContainer = styled.View`
+const ListCardTaskContainer = styled.TouchableOpacity`
   width: 100%;
   padding: 16px;
   margin-bottom: 16px;
