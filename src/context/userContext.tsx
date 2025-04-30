@@ -18,7 +18,7 @@ import {User} from '~/types/user';
 import {getStorage, setStorage} from '~/utils/AsyncStorage';
 import { useThemeContext } from './themeContext';
 import { getDatabaseConnection } from '~/databases';
-import { createTask, getAllTasks, toggleTaskComplete } from '~/databases/tasks';
+import { createTask, deleteTask, getAllTasks, toggleTaskComplete } from '~/databases/tasks';
 
 interface IUserContext {
   loading: boolean;
@@ -32,6 +32,7 @@ interface IUserContext {
   openModal: boolean;
   openAndCloseModal: () => void;
   handleToggleTaskComplete: (id: number,  complete: 0 | 1) => void;
+  handleDeleteTask: (id: number) => void;
 }
 
 const UserContext = createContext({} as IUserContext);
@@ -137,6 +138,19 @@ const UserContextProvider = ({children}: IContext) => {
     }
   };
 
+  const handleDeleteTask =  (id: number) => {
+    return Alert.alert('Você deseja deletar a tarefa?', 'Para deletar a tarefa pressione "sim".', [
+      {text: 'Não', style: 'cancel'},
+      {text: 'Sim', onPress: async() =>{
+        const db = await getDatabaseConnection();
+        deleteTask({db, id}).then(()=>{
+          loadTasks();
+        });
+      }},
+    ]);
+
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -151,6 +165,7 @@ const UserContextProvider = ({children}: IContext) => {
         openModal,
         openAndCloseModal,
         handleToggleTaskComplete,
+        handleDeleteTask,
       }}>
       {children}
     </UserContext.Provider>
