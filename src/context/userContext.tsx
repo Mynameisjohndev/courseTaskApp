@@ -25,6 +25,8 @@ interface IUserContext {
   handleSaveUser: (name: string) => void;
   tasks: Task[];
   handleCreateTask: (task: Task) => void;
+  openModal: boolean;
+  openAndCloseModal: () => void;
   // setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -38,26 +40,8 @@ const UserContextProvider = ({children}: IContext) => {
   );
   const loginButtonRef = useRef<IButtoRef>(null);
   const [loadingSaveUser, setLoadingSaveUser] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: 1,
-      title: 'Ler livros',
-      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
-      complete: true,
-    },
-    {
-      id: 2,
-      title: 'Ler livros',
-      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
-      complete: true,
-    },
-    {
-      id: 3,
-      title: 'Ler livros',
-      description: 'Desenvolver o hábito da leitura, ampliar conhecimentos, melhorar o vocabulário e estimular a criatividade por meio da leitura de livros.',
-      complete: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const {loadedTheme} = useThemeContext();
 
@@ -92,6 +76,10 @@ const UserContextProvider = ({children}: IContext) => {
 
   const handleCreateTask = (task: Task) => {};
 
+  const openAndCloseModal = () => {
+    setOpenModal(v => !v);
+  };
+
   useEffect(() => {
     if(loadedTheme){
       startAppData();
@@ -109,6 +97,8 @@ const UserContextProvider = ({children}: IContext) => {
         handleSaveUser,
         tasks,
         handleCreateTask,
+        openModal,
+        openAndCloseModal,
       }}>
       {children}
     </UserContext.Provider>

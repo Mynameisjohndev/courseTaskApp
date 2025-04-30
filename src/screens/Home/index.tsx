@@ -11,9 +11,10 @@ import {Search} from '~/components/Search';
 import { ListCardTask } from '~/components/ListCardTask';
 import { createTask, deleteTask, getAllTasks, toggleTaskComplete, updateTask } from '~/databases/tasks';
 import { getDatabaseConnection } from '~/databases';
+import { UpsertTaskModal } from '~/components/UpsertTaskModal';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
-  const {user, tasks, handleCreateTask} = useUserContext();
+  const {user, tasks, handleCreateTask,openAndCloseModal, openModal} = useUserContext();
 
   const [search, setSearch] = useState<string>('');
 
@@ -61,10 +62,14 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
             title="CRIAR TAREFA"
             // ref={}
             // loading={}
-            // onPress={()=>handleCreateTask({})}
+            onPress={()=>openAndCloseModal()}
           />
         </>
       )}
+      <UpsertTaskModal {...{
+        openAndCloseModal,
+        visible: openModal,
+      }}/>
     </HomeBackground>
   );
 };
