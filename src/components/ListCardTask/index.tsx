@@ -9,9 +9,11 @@ import { useTheme } from 'styled-components/native';
 import { ListCardTaskButton, ListCardTaskContainer, ListCardTaskDescription, ListCardTaskRow, ListCardTaskTitle } from './styles';
 import { useUserContext } from '~/context/userContext';
 
-const ListCardTask: FC<Task> = ({complete,description,id,title}) => {
+const ListCardTask: FC<Task> = (task) => {
+
+  const {complete,description,id,title} = task;
   const { colors } = useTheme();
-  const {handleToggleTaskComplete, handleDeleteTask} = useUserContext();
+  const {handleToggleTaskComplete, handleDeleteTask, handleOpenModalToEditTask} = useUserContext();
   return(
     <ListCardTaskContainer onPress={()=>handleToggleTaskComplete(id, complete ? 1 : 0)}>
       <ListCardTaskTitle>{title}</ListCardTaskTitle>
@@ -23,7 +25,7 @@ const ListCardTask: FC<Task> = ({complete,description,id,title}) => {
         <ListCardTaskButton onPress={() => handleDeleteTask(id)}>
           <Delete fill={colors.delete_icon}/>
         </ListCardTaskButton>
-        <ListCardTaskButton>
+        <ListCardTaskButton onPress={()=>handleOpenModalToEditTask(task)}>
           <Edit stroke={colors.edit_icon}/>
         </ListCardTaskButton>
       </ListCardTaskRow>

@@ -18,7 +18,7 @@ import {User} from '~/types/user';
 import {getStorage, setStorage} from '~/utils/AsyncStorage';
 import { useThemeContext } from './themeContext';
 import { getDatabaseConnection } from '~/databases';
-import { createTask, deleteTask, getAllTasks, toggleTaskComplete } from '~/databases/tasks';
+import { createTask, deleteTask, getAllTasks, toggleTaskComplete, updateTask } from '~/databases/tasks';
 
 interface IUserContext {
   loading: boolean;
@@ -33,6 +33,10 @@ interface IUserContext {
   openAndCloseModal: () => void;
   handleToggleTaskComplete: (id: number,  complete: 0 | 1) => void;
   handleDeleteTask: (id: number) => void;
+  setSelectedTask: Dispatch<SetStateAction<Task | null>>;
+  selectedTask: Task | null;
+  handleOpenModalToEditTask: (task: Task) => void;
+  handleSaveEditTask: (task: Task, buttonRef: RefObject<IButtoRef | null>, setLoadingCreateTask: Dispatch<SetStateAction<boolean>>) => void;
 }
 
 const UserContext = createContext({} as IUserContext);
@@ -47,6 +51,8 @@ const UserContextProvider = ({children}: IContext) => {
   const [loadingSaveUser, setLoadingSaveUser] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedTask, setSelectedTask] = useState<Task|null>(null);
+
 
   const {loadedTheme} = useThemeContext();
 
@@ -148,7 +154,31 @@ const UserContextProvider = ({children}: IContext) => {
         });
       }},
     ]);
+  };
 
+  const handleOpenModalToEditTask = (task: Task) => {
+    setSelectedTask(task);
+    openAndCloseModal();
+  };
+
+  const handleSaveEditTask = (task: Task, buttonRef: RefObject<IButtoRef | null>, setLoadingCreateTask: Dispatch<SetStateAction<boolean>>) => {
+    if(!task.title){
+      return Alert.alert('Ops!', 'Você precisa informar o titulo da sua tarefa.');
+    }
+    setLoadingCreateTask(v => !v);
+    buttonRef.current?.setActive(false);
+    return Alert.alert('Você deseja salvar as alterações?', 'Para salvar pressione "sim".', [
+      {text: 'Não', style: 'cancel'},
+      {text: 'Sim', onPress: async() =>{
+        const db = await getDatabaseConnection();
+        updateTask({db, ...task}).then(()=>{
+          setLoadingCreateTask(v => !v);
+          buttonRef.current?.setActive(true);
+          loadTasks();
+          openAndCloseModal();
+        });
+      }},
+    ]);
   };
 
   return (
@@ -166,6 +196,10 @@ const UserContextProvider = ({children}: IContext) => {
         openAndCloseModal,
         handleToggleTaskComplete,
         handleDeleteTask,
+        selectedTask,
+        setSelectedTask,
+        handleOpenModalToEditTask,
+        handleSaveEditTask,
       }}>
       {children}
     </UserContext.Provider>
