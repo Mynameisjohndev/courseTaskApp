@@ -24,9 +24,7 @@ const UpsertTaskModalContent = styled.Pressable`
 `;
 
 const UpsertTaskModalScroll = styled.ScrollView`
-  padding-left: 24;
-  padding-right: 24;
-  /* padding: ; */
+  padding: 0px 24px 0px 24px;
 `;
 
 const UpsertTaskModalHeader = styled.View`
@@ -34,7 +32,7 @@ const UpsertTaskModalHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
+  margin: 18px 0;
 `;
 
 const UpsertTaskModalTitle = styled.Text`

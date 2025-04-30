@@ -8,7 +8,7 @@ export type Task = {
 }
 
 export type CreateTask = {
-  db: SQLiteDatabase;
+  db?: SQLiteDatabase;
   title: string;
   description?: string;
 }

@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   createContext,
+  Dispatch,
   RefObject,
+  SetStateAction,
   useContext,
   useEffect,
   useRef,
@@ -11,10 +13,12 @@ import {
 import {Alert} from 'react-native';
 import {IButtoRef} from '~/components/Button';
 import {IContext} from '~/types/context';
-import {Task} from '~/types/task';
+import {CreateTask, Task} from '~/types/task';
 import {User} from '~/types/user';
 import {getStorage, setStorage} from '~/utils/AsyncStorage';
 import { useThemeContext } from './themeContext';
+import { getDatabaseConnection } from '~/databases';
+import { createTask, getAllTasks } from '~/databases/tasks';
 
 interface IUserContext {
   loading: boolean;
@@ -24,10 +28,9 @@ interface IUserContext {
   loadingSaveUser: boolean;
   handleSaveUser: (name: string) => void;
   tasks: Task[];
-  handleCreateTask: (task: Task) => void;
+  handleCreateTask: (task: CreateTask, buttonRef: RefObject<IButtoRef | null>, setLoadingCreateTask: Dispatch<SetStateAction<boolean>>) => void;
   openModal: boolean;
   openAndCloseModal: () => void;
-  // setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserContext = createContext({} as IUserContext);
@@ -74,7 +77,20 @@ const UserContextProvider = ({children}: IContext) => {
     }
   };
 
-  const handleCreateTask = (task: Task) => {};
+  const handleCreateTask = async({title,description}: CreateTask, buttonRef: RefObject<IButtoRef | null>, setLoadingCreateTask: Dispatch<SetStateAction<boolean>>) => {
+    if(!title){
+      return Alert.alert('Ops!', 'Você precisa informar o titulo da sua tarefa.');
+    }
+    setLoadingCreateTask(v => !v);
+    buttonRef.current?.setActive(false);
+    const db = await getDatabaseConnection();
+    createTask({db, title,description}).then(()=>{
+      setLoadingCreateTask(v => !v);
+      buttonRef.current?.setActive(true);
+      openAndCloseModal();
+      loadTasks();
+    });
+  };
 
   const openAndCloseModal = () => {
     setOpenModal(v => !v);
@@ -85,6 +101,17 @@ const UserContextProvider = ({children}: IContext) => {
       startAppData();
     }
   }, [loadedTheme]);
+
+  const loadTasks = async () => {
+    const db = await getDatabaseConnection();
+    const results = await getAllTasks(db);
+    setTasks(results);
+  };
+
+  useEffect(()=>{
+    loadTasks();
+  },[]);
+
 
   return (
     <UserContext.Provider

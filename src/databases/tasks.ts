@@ -15,7 +15,7 @@ const getAllTasks = async (db: SQLiteDatabase) => {
 
 const createTask = async ({db,title,description}:CreateTask) => {
   return runDatabaseOperation<number>(
-    db,
+    db!,
     'INSERT INTO tasks (title, description) VALUES (?, ?)',
     [title, description || null],
     (results) => results.insertId

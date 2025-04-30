@@ -14,6 +14,13 @@ const Header = styled.View`
 const HomeTitle = styled(TitleT2)`
   width: 80%;
   margin-right: 6px;
+  `;
+
+const FloatingButton = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
 `;
 
-export {HomeBackground, Header, HomeTitle};
+export {HomeBackground, Header, HomeTitle, FloatingButton};

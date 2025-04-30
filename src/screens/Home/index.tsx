@@ -1,6 +1,6 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import {AppScreenProps} from '~/types/navigation';
-import {Header, HomeBackground, HomeTitle} from './styles';
+import {FloatingButton, Header, HomeBackground, HomeTitle} from './styles';
 import {useUserContext} from '~/context/userContext';
 import {Content, SubTitleT1} from '~/global/styles';
 import {Button} from '~/components/Button';
@@ -9,28 +9,13 @@ import {FlatList} from 'react-native';
 import {SwitchAppTheme} from '~/components/SwitchAppTheme';
 import {Search} from '~/components/Search';
 import { ListCardTask } from '~/components/ListCardTask';
-import { createTask, deleteTask, getAllTasks, toggleTaskComplete, updateTask } from '~/databases/tasks';
-import { getDatabaseConnection } from '~/databases';
 import { UpsertTaskModal } from '~/components/UpsertTaskModal';
+import Plus from '~/assets/svgs/icons/plus.svg';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
-  const {user, tasks, handleCreateTask,openAndCloseModal, openModal} = useUserContext();
+  const {user, tasks, openAndCloseModal, openModal} = useUserContext();
 
   const [search, setSearch] = useState<string>('');
-
-  const test = async() => {
-    const db = await getDatabaseConnection();
-    const result = await getAllTasks(db);
-    console.log(result);
-    // await createTask({db, title: 'Ler livros', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam iste molestiae fugit in assumenda cupiditate libero nesciunt, enim saepe e'});
-    // await updateTask({db, title: 'Ler', description: 'Lorem ipsum dolor', id: 2});
-    // await deleteTask({db, id: 2});
-    // await toggleTaskComplete({db, id: 3, complete: false});
-  };
-
-  useEffect(()=>{
-    test();
-  },[]);
 
   return (
     <HomeBackground>
@@ -60,12 +45,13 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
           </Content>
           <Button
             title="CRIAR TAREFA"
-            // ref={}
-            // loading={}
             onPress={()=>openAndCloseModal()}
           />
         </>
       )}
+      <FloatingButton  onPress={()=>openAndCloseModal()}>
+        <Plus width={45} height={45}/>
+      </FloatingButton>
       <UpsertTaskModal {...{
         openAndCloseModal,
         visible: openModal,
