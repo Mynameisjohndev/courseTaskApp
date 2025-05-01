@@ -8,8 +8,8 @@ import Ilustration from '~/assets/svgs/ilustrations/ilustration-home.svg';
 import {FlatList} from 'react-native';
 import {SwitchAppTheme} from '~/components/SwitchAppTheme';
 import {Search} from '~/components/Search';
-import { ListCardTask } from '~/components/ListCardTask';
-import { UpsertTaskModal } from '~/components/UpsertTaskModal';
+import {ListCardTask} from '~/components/ListCardTask';
+import {UpsertTaskModal} from '~/components/UpsertTaskModal';
 import Plus from '~/assets/svgs/icons/plus.svg';
 
 const Home: FC<AppScreenProps<'home'>> = ({}) => {
@@ -31,9 +31,12 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
             data={tasks}
             keyExtractor={item => String(item.id)}
             renderItem={({item}) => {
-              return <ListCardTask {...item} key={item.id}/>;
+              return <ListCardTask {...item} key={item.id} />;
             }}
           />
+          <FloatingButton onPress={() => openAndCloseModal()}>
+            <Plus width={45} height={45} />
+          </FloatingButton>
         </>
       ) : (
         <>
@@ -44,19 +47,15 @@ const Home: FC<AppScreenProps<'home'>> = ({}) => {
               não começa a criar suas tarefas agora?
             </SubTitleT1>
           </Content>
-          <Button
-            title="CRIAR TAREFA"
-            onPress={()=>openAndCloseModal()}
-          />
+          <Button title="CRIAR TAREFA" onPress={() => openAndCloseModal()} />
         </>
       )}
-      <FloatingButton  onPress={()=>openAndCloseModal()}>
-        <Plus width={45} height={45}/>
-      </FloatingButton>
-      <UpsertTaskModal {...{
-        openAndCloseModal,
-        visible: openModal,
-      }}/>
+      <UpsertTaskModal
+        {...{
+          openAndCloseModal,
+          visible: openModal,
+        }}
+      />
     </HomeBackground>
   );
 };

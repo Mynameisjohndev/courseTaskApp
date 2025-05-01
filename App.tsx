@@ -1,7 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import { StatusBar } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {ThemeProvider} from 'styled-components/native';
+import { toastConfig } from '~/components/Toast';
 import {AppContext} from '~/context';
 import {useThemeContext} from '~/context/themeContext';
 import {startDatabase} from '~/databases';
@@ -22,6 +24,7 @@ const App: React.FC = () => {
           <NavigationContainer>
             <Routes />
           </NavigationContainer>
+          <Toast config={toastConfig}/>
         </ThemeProvider>
       );
     }

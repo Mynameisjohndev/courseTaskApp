@@ -19,6 +19,7 @@ import {getStorage, setStorage} from '~/utils/AsyncStorage';
 import { useThemeContext } from './themeContext';
 import { getDatabaseConnection } from '~/databases';
 import { createTask, deleteTask, getAllTasks, toggleTaskComplete, updateTask } from '~/databases/tasks';
+import Toast from 'react-native-toast-message';
 
 interface IUserContext {
   loading: boolean;
@@ -97,6 +98,11 @@ const UserContextProvider = ({children}: IContext) => {
       buttonRef.current?.setActive(true);
       openAndCloseModal();
       loadTasks();
+      Toast.show({
+        text1: 'Tarefa criada com sucesso!',
+        visibilityTime: 3000,
+        type: 'success',
+      });
     });
   };
 
@@ -128,6 +134,11 @@ const UserContextProvider = ({children}: IContext) => {
           const db = await getDatabaseConnection();
           toggleTaskComplete({db, id, complete: true}).then(()=>{
             loadTasks();
+            Toast.show({
+              text1: 'Tarefa concluida com sucesso!',
+              visibilityTime: 3000,
+              type: 'success',
+            });
           });
         }},
       ]);
@@ -138,6 +149,11 @@ const UserContextProvider = ({children}: IContext) => {
           const db = await getDatabaseConnection();
           toggleTaskComplete({db, id, complete: false}).then(()=>{
             loadTasks();
+            Toast.show({
+              text1: 'Tarefa revertida com sucesso!',
+              visibilityTime: 3000,
+              type: 'success',
+            });
           });
         }},
       ]);
@@ -151,6 +167,11 @@ const UserContextProvider = ({children}: IContext) => {
         const db = await getDatabaseConnection();
         deleteTask({db, id}).then(()=>{
           loadTasks();
+          Toast.show({
+            text1: 'Tarefa deletada com sucesso!',
+            visibilityTime: 3000,
+            type: 'success',
+          });
         });
       }},
     ]);
